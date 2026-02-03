@@ -1,0 +1,219 @@
+{
+  "lastUpdated": "2024-12-31",
+  "source": "経済産業省・電力広域的運営推進機関(OCCTO)・ISEP",
+  "summary": {
+    "totalUnderReview": 9500,
+    "totalContracted": 800,
+    "totalConnected": 17,
+    "unit": "万kW",
+    "nationalVreRatio": 12.6,
+    "datacenter": {
+      "demand2025": 47,
+      "demand2034": 616,
+      "pendingCapacity2030": 1500,
+      "unit": "万kW"
+    }
+  },
+  "timeline": {
+    "labels": [
+      "2023年12月",
+      "2024年3月",
+      "2024年6月",
+      "2024年9月",
+      "2024年12月"
+    ],
+    "totalUnderReview": [
+      2700,
+      4200,
+      5800,
+      7500,
+      9500
+    ],
+    "totalContracted": [
+      300,
+      400,
+      520,
+      650,
+      800
+    ],
+    "totalConnected": [
+      8,
+      10,
+      12,
+      15,
+      17
+    ]
+  },
+  "regions": [
+    {
+      "id": "hokkaido",
+      "name": "北海道",
+      "nameEn": "Hokkaido",
+      "underReview": 133,
+      "contracted": 15,
+      "connected": 2,
+      "center": [
+        143.0,
+        43.5
+      ],
+      "characteristics": "風力発電ポテンシャル高、本州への送電容量制約",
+      "vreRatio": 20.8,
+      "curtailmentRate": 0.2,
+      "solarApplications": 170,
+      "windApplications": 1
+    },
+    {
+      "id": "tohoku",
+      "name": "東北",
+      "nameEn": "Tohoku",
+      "underReview": 175,
+      "contracted": 20,
+      "connected": 1.5,
+      "center": [
+        140.5,
+        39.5
+      ],
+      "characteristics": "再エネ導入増加、送電網増強中。自然エネルギー比率は全国最大(41.5%)",
+      "vreRatio": 18.5,
+      "curtailmentRate": 2.5,
+      "solarApplications": 489,
+      "windApplications": 0
+    },
+    {
+      "id": "tokyo",
+      "name": "東京",
+      "nameEn": "Tokyo",
+      "underReview": 122,
+      "contracted": 80,
+      "connected": 3,
+      "center": [
+        139.5,
+        36.0
+      ],
+      "characteristics": "大需要地、系統接続比較的容易、出力制御の蓋然性低い",
+      "vreRatio": 8.0,
+      "curtailmentRate": 0,
+      "solarApplications": 865,
+      "windApplications": 0
+    },
+    {
+      "id": "chubu",
+      "name": "中部",
+      "nameEn": "Chubu",
+      "underReview": 131,
+      "contracted": 25,
+      "connected": 2,
+      "center": [
+        137.5,
+        35.5
+      ],
+      "characteristics": "産業用需要大、系統安定",
+      "vreRatio": 10.5,
+      "curtailmentRate": 0.6,
+      "solarApplications": 316,
+      "windApplications": 0
+    },
+    {
+      "id": "hokuriku",
+      "name": "北陸",
+      "nameEn": "Hokuriku",
+      "underReview": 240,
+      "contracted": 15,
+      "connected": 1,
+      "center": [
+        136.8,
+        36.8
+      ],
+      "characteristics": "水力発電豊富、再エネ拡大中",
+      "vreRatio": 9.0,
+      "curtailmentRate": 1.1,
+      "solarApplications": 50,
+      "windApplications": 0
+    },
+    {
+      "id": "kansai",
+      "name": "関西",
+      "nameEn": "Kansai",
+      "underReview": 240,
+      "contracted": 50,
+      "connected": 2.5,
+      "center": [
+        135.5,
+        34.8
+      ],
+      "characteristics": "大都市圏、需要安定",
+      "vreRatio": 9.5,
+      "curtailmentRate": 0.7,
+      "solarApplications": 124,
+      "windApplications": 0
+    },
+    {
+      "id": "chugoku",
+      "name": "中国",
+      "nameEn": "Chugoku",
+      "underReview": 927,
+      "contracted": 40,
+      "connected": 1.5,
+      "center": [
+        133.0,
+        34.8
+      ],
+      "characteristics": "太陽光ポテンシャル高、系統制約顕在化、出力制御率高い",
+      "vreRatio": 15.0,
+      "curtailmentRate": 5.8,
+      "solarApplications": 150,
+      "windApplications": 0
+    },
+    {
+      "id": "shikoku",
+      "name": "四国",
+      "nameEn": "Shikoku",
+      "underReview": 198,
+      "contracted": 18,
+      "connected": 1,
+      "center": [
+        133.5,
+        33.8
+      ],
+      "characteristics": "再エネ比率高、本州連系線制約",
+      "vreRatio": 14.0,
+      "curtailmentRate": 4.5,
+      "solarApplications": 47,
+      "windApplications": 0
+    },
+    {
+      "id": "kyushu",
+      "name": "九州",
+      "nameEn": "Kyushu",
+      "underReview": 1437,
+      "contracted": 100,
+      "connected": 2.5,
+      "center": [
+        131.0,
+        33.0
+      ],
+      "characteristics": "太陽光大量導入、出力制御頻発、蓄電池需要最大",
+      "vreRatio": 18.0,
+      "curtailmentRate": 6.1,
+      "solarApplications": 236,
+      "windApplications": 0
+    },
+    {
+      "id": "okinawa",
+      "name": "沖縄",
+      "nameEn": "Okinawa",
+      "underReview": 25,
+      "contracted": 5,
+      "connected": 0.5,
+      "center": [
+        127.8,
+        26.3
+      ],
+      "characteristics": "離島系統、本土と独立",
+      "vreRatio": 6.0,
+      "curtailmentRate": 0.2,
+      "solarApplications": 0,
+      "windApplications": 0
+    }
+  ]
+}

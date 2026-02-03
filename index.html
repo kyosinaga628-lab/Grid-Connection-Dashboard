@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本の系統接続検討状況 ダッシュボード | Grid Connection Dashboard</title>
+    <meta name="description" content="日本の電力系統における蓄電池・再エネの接続検討状況を可視化。変動電源比率、出力制御率、申込件数などを直感的に理解できるインタラクティブダッシュボード。">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="日本の系統接続検討状況 ダッシュボード">
+    <meta property="og:description" content="蓄電池・再エネの系統接続状況を可視化。変動電源比率と蓄電池需要の関係を分析。">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "日本の系統接続検討状況 ダッシュボード",
+        "description": "日本の電力系統における蓄電池、再生可能エネルギー（太陽光・風力）の接続申込状況を可視化するアプリケーション。",
+        "applicationCategory": "VisualizationTool",
+        "genre": "Data Visualization",
+        "keywords": "系統用蓄電池, 再生可能エネルギー, 接続検討, VRE比率, 電力系統, 系統連系, 出力制御, OCCTO, METI",
+        "about": {
+            "@type": "Thing",
+            "name": "Japan Grid Battery & Renewable Connection Status"
+        },
+        "license": "https://opensource.org/licenses/MIT",
+        "isAccessibleForFree": true,
+        "author": {
+            "@type": "Organization",
+            "name": "Grid Battery Viz Project"
+        }
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="app-title">
+                <span class="icon">⚡</span>
+                <span class="title-main">系統接続検討状況</span>
+                <span class="title-sub">蓄電池・再エネ・需要施設</span>
+            </h1>
+            <p class="app-description">
+                10電力エリアごとの蓄電池、再生可能エネルギー（太陽光・風力）の接続申込状況を視覚化。<br>
+                <strong>変動電源比率(VRE)</strong>と<strong>出力制御率</strong>から系統用蓄電池の需要背景を読み解けます。
+            <p class="data-date">
+                データ: 2024年12月末時点<br>
+                出典: <a href="https://www.meti.go.jp/" target="_blank">経済産業省</a>・
+                <a href="https://www.occto.or.jp/" target="_blank">電力広域的運営推進機関(OCCTO)</a>・
+                <a href="https://www.isep.or.jp/" target="_blank">ISEP</a>
+            </p>
+        </header>
+
+        <!-- Top Area Cards -->
+        <section class="area-cards-section">
+            <div id="area-card-list" class="area-card-list">
+                <!-- Cards will be injected by JS -->
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content dashboard-grid">
+            <!-- Left: Map Container -->
+            <div class="map-section glass-panel">
+                <div id="map-container" class="map-container">
+                    <div id="japan-map"></div>
+                </div>
+
+                <!-- Legend -->
+                <div class="legend">
+                    <div class="legend-title">🔋 蓄電池ステータス凡例</div>
+                    <div class="legend-item">
+                        <div class="legend-color"
+                            style="background: var(--color-under-review); box-shadow: 0 0 5px var(--color-under-review);">
+                        </div>
+                        <span>🔴 接続検討申込中</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--color-contracted);"></div>
+                        <span>🟠 接続契約済</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--color-connected);"></div>
+                        <span>🟢 運転中</span>
+                    </div>
+                    <div class="legend-note">円の面積は蓄電池容量(万kW)に比例</div>
+                </div>
+            </div>
+
+            <!-- Right: Details Panel -->
+            <div class="stats-section glass-panel">
+
+                <!-- Detailed Info Panel -->
+                <div id="detail-panel" class="detail-panel">
+                    <h2 class="stats-title">詳細情報</h2>
+                    <div id="region-detail" class="region-detail-content">
+                        <p class="placeholder-text">
+                            エリアカードまたは<br>地図上のマーカーに<br>カーソルを合わせて詳細を表示
+                        </p>
+                    </div>
+                </div>
+
+                <!-- National Statistics Summary -->
+                <div class="stats-card compact-summary">
+                    <h3 class="stats-subtitle">🔋 蓄電池 全国合計 (万kW)</h3>
+                    <div class="summary-row">
+                        <div class="summary-item">
+                            <span class="label">🔴 申込</span>
+                            <span class="value danger" id="total-under-review">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">🟠 契約</span>
+                            <span class="value warning" id="total-contracted">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">🟢 運転</span>
+                            <span class="value success" id="total-connected">-</span>
+                        </div>
+                    </div>
+                    <div class="comparison-bar-container">
+                        <div class="comparison-bar bar-under-review" style="width: 0%"></div>
+                        <div class="comparison-bar bar-contracted" style="width: 0%"></div>
+                        <div class="comparison-bar bar-connected" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- National Timeline (Moved to bottom) -->
+                <div class="stats-card">
+                    <h2 class="stats-title">全国の時間軸推移 (1年間)</h2>
+                    <div id="timeline-chart" class="timeline-chart"></div>
+                    <p class="timeline-note">
+                        接続検討申込は1年で約<strong>3.5倍</strong>に急増
+                    </p>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>※数値は四捨五入されており、合計と一致しない場合があります。</p>
+            <p>&copy; 2026 Grid Battery Viz Project</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
