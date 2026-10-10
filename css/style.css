@@ -591,6 +591,11 @@ body {
     padding-top: var(--spacing-md);
 }
 
+.footer a {
+    color: inherit;
+    text-decoration: underline;
+}
+
 /* ===========================================
    Responsive Design
    =========================================== */
