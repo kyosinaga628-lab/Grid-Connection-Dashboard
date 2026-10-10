@@ -12,8 +12,11 @@ const CONFIG = {
         zoom: 5.5,
         minZoom: 4,
         maxZoom: 10,
-        tileUrl: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        // CARTO now requires an API key and watermarks anonymous tiles,
+        // so use Esri's key-free Dark Gray Canvas (base + label overlay).
+        tileUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        labelUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+        attribution: '&copy; <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>, HERE, Garmin, &copy; OpenStreetMap contributors'
     },
     bubble: {
         maxRadius: 90
@@ -73,7 +76,13 @@ function initMap() {
 
     L.tileLayer(CONFIG.map.tileUrl, {
         attribution: CONFIG.map.attribution,
-        maxZoom: 20
+        maxZoom: 20,
+        maxNativeZoom: 16
+    }).addTo(state.map);
+
+    L.tileLayer(CONFIG.map.labelUrl, {
+        maxZoom: 20,
+        maxNativeZoom: 16
     }).addTo(state.map);
 
     L.control.zoom({ position: 'bottomright' }).addTo(state.map);
